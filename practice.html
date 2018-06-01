@@ -5,6 +5,13 @@
     #hi{
       color:red;
     }
+    .dark{
+      background-color: black;
+      color: white;
+    }
+    .dark #hi{
+      color:yellow;
+    }
   </style>
 </head>
 <body>
@@ -13,5 +20,6 @@
         <li>CSS</li>
         <li id="hi">JavaScript</li>
     </ul>
+  <input type="button" value="dark" onclick="document.className='dark';"
 </body>
 </html>
