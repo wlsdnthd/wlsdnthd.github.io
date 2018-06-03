@@ -5,7 +5,7 @@
   <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
   <link rel="stylesheet" type="text/css"
   href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
-  <title>BlockChain Testbed Prototype</title>
+  <title>BlockChain Testbed Prototype </title>
   <style>
     body {margin-left:50px;}
     #storedData {font-size:300%; margin-right:10px;}
@@ -28,14 +28,13 @@
 <!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script -->
 <script>
 var contractAddress = '0x5f51641486796dd1566386be095c43c37ab42e6b';
-//remix (SimpleStorage)
 var abi = [{"constant":false,"inputs":[{"name":"x","type":"uint256"}],
 "name":"set","outputs":[],"payable":false,"type":"function"},{"constant":true,
 "inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"}];
 var simpleStorageContract;
 var simpleStorage;
 
-window.addEventListener('load', function()
+window.addEventListener('load', function() {
 
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined') {
