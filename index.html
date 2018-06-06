@@ -17,6 +17,7 @@
         <h1>Coursetro Instructor</h1>
 
         <h2 id="instructor"></h2>
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
 
         <label for="name" class="col-lg-2 control-label">Instructor Name</label>
         <input id="name" type="text">
@@ -30,16 +31,33 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
+    <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
     <script>
       if (typeof web3 !== 'undefined') {
-          web3 = new Web3(web3.currentProvider);
+          window.web3 = new Web3(web3.currentProvider);
         } else {
           // set the provider you want from Web3.providers
-            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
           }
        web3.eth.defaultAccount = web3.eth.accounts[0];
        var CoursetroContract = web3.eth.contract([
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "age",
+				"type": "uint256"
+			}
+		],
+		"name": "Instructor",
+		"type": "event"
+	},
 	{
 		"constant": false,
 		"inputs": [
@@ -77,20 +95,28 @@
 		"type": "function"
 	}
 ]);
-var Coursetro = CoursetroContract.at('0x3831d33d6b3925391087a02c8c54892662bdb556');
+var Coursetro = CoursetroContract.at('0x2cda731ac30fa09d0a7cb8ac0e8e817bf057f33b');
         console.log(Coursetro);
-        Coursetro.getInstructor(function(error, result){
-                   if(!error)
-                       {
-                           $("#instructor").html(result[0]+' ('+result[1]+' years old)');
-                           console.log(result);
-                       }
-                   else
-                       console.error(error);
-               });
+        var instructorEvent = Coursetro.Instructor();
+        instructorEvent.watch(function(error, result){
+            if (!error)
+                {
+                    $("#loader").hide();
+                    $("#instructor").html(result.args.name + ' (' + result.args.age + ' years old)');
+                } else {
+                    $("#loader").hide();
+                    console.log(error);
+                }
+        });
 
                $("#button").click(function() {
-                   Coursetro.setInstructor($("#name").val(), $("#age").val());
+                 $("#loader").show();
+                 Coursetro.setInstructor($("#name").val(), $("#age").val(), (err, res) => {
+                    if (err) {
+                    $("#loader").hide();
+                    console.log('oh no');
+                  }
+                });
                });
 
     </script>
