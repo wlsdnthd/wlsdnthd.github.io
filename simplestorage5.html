@@ -17,11 +17,14 @@
 <ul>
   <li>Contract Address: <span id="contractAddr"></span></li>
   <li>My Account Address: <span id="accountAddr"></span></li>
-  <li>Saved Value: <span id="storedData"></span>
-    (Current Number of Blocks: <span id="lastBlock"></span>)</li>
-  <li>Saved Value: <span id="storedData2"></span>
-  <li><input id="newValue" type="text"><input id="newValue2" type="text"><button onclick="setValue()">Save New Value</button>
-      <div id="result"></div></li>
+
+  <li>Current Number of Blocks: <span id="lastBlock"></span></li>
+  <li>Saved Value: <span id="storedData"></span></li>
+  <li>Saved Value: <span id="storedData2"></span></li>
+  <li><input id="newValue" type="text"></li>
+  <li><button onclick="setValue()">Save Age</button><div id="result"></div></li>
+  <li><input id="newValue2" type="text"></li>
+  <li><button onclick="setValue()">Save Name</button><div id="result2"></div></li>
 </ul>
 </body>
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
@@ -134,17 +137,20 @@ function getValue() {
 function setValue() {
 
   var newValue = document.getElementById('newValue').value;
-  var newValue2 = document.getElementById('newValue2').value;
   var txid
   simpleStorage.set(newValue, function(e,r){
     document.getElementById('result').innerHTML =
     'Transaction id: ' + r + '<span id="pending" style="color:red;">(Pending)</span>';
     txid = r;
   });
+function setValue() {
+
+  var newValue2 = document.getElementById('newValue2').value;
+  var txid2
   simpleStorage.set2(newValue2, function(e,r){
-    document.getElementById('result').innerHTML =
+    document.getElementById('result2').innerHTML =
     'Transaction id: ' + r + '<span id="pending" style="color:red;">(Pending)</span>';
-    txid = r;
+    txid2 = r;
   });
   var filter = web3.eth.filter('latest');
   filter.watch(function(e, r) {
