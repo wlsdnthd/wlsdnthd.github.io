@@ -97,13 +97,13 @@ function getLink(addr) {
 }
 
 
-
-
-
 $("#button").click(function() {
-      simpleStorage.setInstructor($("#name").val(), $("#age").val());
-});
-
+          simpleStorage.setInstructor($("#name").val(), $("#age").val(), (err, res) => {
+               if (err) {
+                   console.error(error);
+               }
+           });
+       });
 
 
 function getValue() {
