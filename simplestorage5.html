@@ -27,24 +27,6 @@
 var contractAddress = '0x895bb940c9e633a5ca39c300a2c92298925ab8b3';
 var abi = [
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "getInstructor",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bytes15"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"type": "function",
-		"stateMutability": "view"
-	},
-	{
 		"constant": false,
 		"inputs": [
 			{
@@ -61,6 +43,24 @@ var abi = [
 		"payable": false,
 		"type": "function",
 		"stateMutability": "nonpayable"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes15"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
 	}
 ];
 var simpleStorageContract;
