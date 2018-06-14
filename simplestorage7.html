@@ -26,7 +26,7 @@
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script>
-var contractAddress = '0xb1243b0b799b7511664af21236ae2d19f817e8e7';
+var contractAddress = '0x08a2d7d26febf4fa37c881f3cc9b7ee381297272';
 var abi = [
 	{
 		"constant": true,
@@ -71,15 +71,7 @@ var abi = [
 		"outputs": [
 			{
 				"name": "",
-				"type": "string"
-			},
-			{
-				"name": "",
-				"type": "string"
-			},
-			{
-				"name": "",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -147,7 +139,7 @@ function getValue1() {
   simpleStorage.getInstructor1(function(error, result){
               if(!error)
                   {
-                      $("#NameAge1").html(result[0]+' '+result[1]+' '+result[2]);
+                      $("#NameAge1").html(result[0]);
                       console.log(result);
                   }
               else
