@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  <title>Prototype</title>
+  <style>
+    body {margin-left:50px;}
+    #NameAge {font-size:300%; margin-right:10px;}
+    #age {width: 200px; margin-right:10px; text-align:right;}
+    #name {width: 200px; margin-right:10px; text-align:right;}
+  </style>
+</head>
+<body>
+<h3>Prototype version_two variables2</h3>
+<ul>
+  <li>Contract Address: <span id="contractAddr"></span></li>
+  <li>My Account Address: <span id="accountAddr"></span></li>
+  <li>Saved Value: <span id="NameAge"></span>
+  <li><input id="name" type="text"><input id="age" type="text"><button id="button">Save New Value</button>
+      <div id="result"></div></li>
+</ul>
+</body>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script>
+var contractAddress = '0x17191a777e21eebc5b0e9d6cf802e9cdc214f1f0';
+var abi = [
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"name": "Count",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			}
+		],
+		"name": "set",
+		"outputs": [
+			{
+				"name": "rowNumber",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "Instructors",
+		"outputs": [
+			{
+				"name": "Name",
+				"type": "string"
+			},
+			{
+				"name": "Age",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+var simpleStorageContract;
+var simpleStorage;
+
+window.addEventListener('load', function() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+    // Use Mist/MetaMask's provider
+    window.web3 = new Web3(web3.currentProvider);
+  } else {
+    console.log('No web3? You should consider trying MetaMask!')
+    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+    window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
+  // Now you can start your app & access web3 freely:
+  startApp();
+});
+
+function startApp() {
+  simpleStorageContract = web3.eth.contract(abi);
+  simpleStorage = simpleStorageContract.at(contractAddress);
+  document.getElementById('contractAddr').innerHTML = getLink(contractAddress);
+  web3.eth.getAccounts(function(e,r){
+    document.getElementById('accountAddr').innerHTML = getLink(r[0]);
+  });
+
+  getValue();
+}
+
+function getLink(addr) {
+  return '<a target="_blank" href=https://testnet.etherscan.io/address/' + addr + '>' + addr +'</a>';
+}
+
+
+$("#button").click(function() {
+          simpleStorage.set($("#name").val(), $("#age").val(), (err, res) => {
+               if (err) {
+                   console.error(error);
+               }
+           });
+       });
+
+
+function getValue() {
+  simpleStorage.getInstructor(function(error, result){
+              if(!error)
+                  {
+                      $("#NameAge").html(result[0]+' ('+result[1]+' years old)');
+                      console.log(result);
+                  }
+              else
+                  console.error(error);
+          });
+}
+
+</script>
+</html>
