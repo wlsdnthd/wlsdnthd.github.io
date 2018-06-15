@@ -113,14 +113,16 @@ $("#button").click(function() {
        });
 
 
-function getValue() {
-  simpleStorage.StructAndFor((err, res) => {
-              if(error)
-                  {
-                      console.error(error);
-                  }
-          });
-}
+       function getValue() {
+         simpleStorage.StructAndFor(function(error, result){
+                     if(!error)
+                         {
+                             console.log(result);
+                         }
+                     else
+                         console.error(error);
+                 });
+       }
 
 </script>
 </html>
